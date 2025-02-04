@@ -1,16 +1,16 @@
 workers_dev = true
-name = "my-worker"
+name = "example-better-auth-cloudflare"
 compatibility_date = "2024-11-18"
 compatibility_flags = ["nodejs_compat"]
 main = "./build/server/index.js"
 assets = { directory = "./build/client/" }
 
 [vars]
-BETTER_AUTH_SECRET = "secret" # this would be stored as a secret, obviously.
 BETTER_AUTH_URL = "http://localhost:5173"
+# BETTER_AUTH_SECRET
 
 [[d1_databases]]
 binding = "DB"
-database_name = "your-database-name"
-database_id = "your-database-id"
+database_name = "example-better-auth-cloudflare"
+database_id = "cce63044-80d8-455e-b912-4a2cd8134145"
 migrations_dir = "drizzle"
