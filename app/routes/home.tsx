@@ -1,8 +1,7 @@
-import * as schema from "~/database/schema";
-
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
-
+import { requireSession } from "~/lib/auth.server";
+import { createBetterAuthClient } from "~/lib/auth";
+import { useNavigate } from "react-router";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
@@ -10,47 +9,31 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export async function action({ request, context }: Route.ActionArgs) {
-  const formData = await request.formData();
-  let name = formData.get("name");
-  let email = formData.get("email");
-  if (typeof name !== "string" || typeof email !== "string") {
-    return { guestBookError: "Name and email are required" };
-  }
-
-  name = name.trim();
-  email = email.trim();
-  if (!name || !email) {
-    return { guestBookError: "Name and email are required" };
-  }
-
-  try {
-    await context.db.insert(schema.guestBook).values({ name, email });
-  } catch (error) {
-    return { guestBookError: "Error adding to guest book" };
-  }
-}
-
-export async function loader({ context }: Route.LoaderArgs) {
-  const guestBook = await context.db.query.guestBook.findMany({
-    columns: {
-      id: true,
-      name: true,
-    },
-  });
+export async function loader(args: Route.LoaderArgs) {
+  const session = await requireSession(args, "/signin");
 
   return {
-    guestBook,
-    message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE,
+    userId: session.user.id,
+    name: session.user.name,
   };
 }
 
-export default function Home({ actionData, loaderData }: Route.ComponentProps) {
+export default function Home({ loaderData }: Route.ComponentProps) {
+  const authClient = createBetterAuthClient();
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    if (confirm("Are you sure you want to sign out?")) {
+      await authClient.signOut();
+      navigate("/signin");
+    }
+  };
+
   return (
-    <Welcome
-      guestBook={loaderData.guestBook}
-      guestBookError={actionData?.guestBookError}
-      message={loaderData.message}
-    />
+    <div className="flex flex-col items-start gap-4">
+      <h1>Hello {loaderData.name}.</h1>
+
+      <button onClick={signOut}>Sign Out</button>
+    </div>
   );
 }

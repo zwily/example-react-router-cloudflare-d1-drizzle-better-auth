@@ -5,7 +5,7 @@
     "app/**/*",
     "app/**/.server/**/*",
     "app/**/.client/**/*",
-    "database/**/*",
+    "app/database/**/*",
     "workers/**/*",
     "load-context.ts",
     "worker-configuration.d.ts"
@@ -22,7 +22,7 @@
     "baseUrl": ".",
     "rootDirs": [".", "./.react-router/types"],
     "paths": {
-      "~/database/*": ["./database/*"],
+      "~/database/*": ["app/database/*"],
       "~/*": ["./app/*"]
     },
     "esModuleInterop": true,

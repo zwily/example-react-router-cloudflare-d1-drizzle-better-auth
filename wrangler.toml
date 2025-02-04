@@ -6,7 +6,8 @@ main = "./build/server/index.js"
 assets = { directory = "./build/client/" }
 
 [vars]
-VALUE_FROM_CLOUDFLARE = "Hello from Cloudflare"
+BETTER_AUTH_SECRET = "secret" # this would be stored as a secret, obviously.
+BETTER_AUTH_URL = "http://localhost:5173"
 
 [[d1_databases]]
 binding = "DB"
