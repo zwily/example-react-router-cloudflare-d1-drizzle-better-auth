@@ -1,25 +1,5 @@
 # Example app with React Router v7 + Cloudflare + D1 + Drizzle + Better Auth
 
-This app shows off the stack described above. Unfortunately, something is broken
-when attempting to run in wrangler (or deploying to prod). To replicate:
-
-```
-$ npm install
-$ npm run build
-$ npm start
-```
-
-You'll probably get this error:
-
-```
-✘ [ERROR] service core:user:example-better-auth-cloudflare: Uncaught Error: Middleware handler is required
-
-    at null.<anonymous> (index.js:27140:11) in createMiddleware
-    at null.<anonymous> (index.js:32001:5)
-```
-
-That is thrown by the package `better-call`, a dependency of `better-auth`.
-
 ## Features
 
 - 🚀 Server-side rendering

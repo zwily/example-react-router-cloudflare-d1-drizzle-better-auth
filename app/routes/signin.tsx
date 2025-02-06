@@ -1,9 +1,9 @@
 import { Form, useNavigate, redirect, Link } from "react-router";
 import { useState } from "react";
-import { createBetterAuthClient } from "~/lib/auth";
 import { cn } from "~/lib/utils";
 import type { Route } from "./+types/signin";
 import { getSession } from "~/lib/auth.server";
+import { useBetterAuthClient } from "~/components/BetterAuthContext";
 
 export async function loader(args: Route.LoaderArgs) {
   const session = await getSession(args);
@@ -16,7 +16,7 @@ export async function loader(args: Route.LoaderArgs) {
 }
 
 export default function SignIn() {
-  const authClient = createBetterAuthClient();
+  const authClient = useBetterAuthClient();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");

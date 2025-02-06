@@ -1,10 +1,10 @@
 import { Form, useNavigate, Link } from "react-router";
 import { useState } from "react";
-import { createBetterAuthClient } from "~/lib/auth";
 import { cn } from "~/lib/utils";
+import { useBetterAuthClient } from "~/components/BetterAuthContext";
 
 export default function SignUp() {
-  const authClient = createBetterAuthClient();
+  const authClient = useBetterAuthClient();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -66,7 +66,7 @@ export default function SignUp() {
         {error && <div className="text-red-500">{error}</div>}
 
         <button type="submit" disabled={loading} className="mt-4">
-          Sign In
+          Sign Up
         </button>
 
         <p>

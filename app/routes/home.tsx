@@ -1,6 +1,5 @@
 import type { Route } from "./+types/home";
 import { requireSession } from "~/lib/auth.server";
-import { createBetterAuthClient } from "~/lib/auth";
 import { useNavigate } from "react-router";
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,6 +7,7 @@ export function meta({}: Route.MetaArgs) {
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
+import { useBetterAuthClient } from "~/components/BetterAuthContext";
 
 export async function loader(args: Route.LoaderArgs) {
   const session = await requireSession(args, "/signin");
@@ -19,7 +19,7 @@ export async function loader(args: Route.LoaderArgs) {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const authClient = createBetterAuthClient();
+  const authClient = useBetterAuthClient();
   const navigate = useNavigate();
 
   const signOut = async () => {

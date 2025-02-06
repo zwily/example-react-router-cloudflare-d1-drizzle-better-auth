@@ -8,12 +8,15 @@ import { redirect } from "react-router";
 export function createBetterAuth({
   db,
   baseURL,
+  secret,
 }: {
   db: Database;
   baseURL: string;
+  secret: string;
 }) {
   return betterAuth({
     baseURL,
+    secret,
     database: drizzleAdapter(db, {
       provider: "sqlite",
     }),
@@ -27,6 +30,7 @@ export function createBetterAuthFromContext(context: AppLoadContext) {
   return createBetterAuth({
     db: context.db,
     baseURL: context.cloudflare.env.BETTER_AUTH_URL,
+    secret: context.cloudflare.env.BETTER_AUTH_SECRET,
   });
 }
 
